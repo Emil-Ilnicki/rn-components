@@ -1,33 +1,58 @@
+import {HandlerFunction} from '@storybook/addon-actions';
 import React from 'react';
-import {Text, View, StyleSheet, SafeAreaView} from 'react-native';
+import {
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {Icon} from 'react-native-elements';
-
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {styles} from './ListItemStyle';
 
 interface ListItemProps {
   iconName: string;
-  itemText: string;
+  iconGroup: string;
+  iconColor: string;
+  itemText?: string;
   rightText?: string;
+  rightNumber?: number;
+  onPress: HandlerFunction;
 }
 
-const ListItem: React.FC<ListItemProps> = ({...props}) => {
-  console.log(props.iconName);
+const ListItem: React.FC<ListItemProps> = ({onPress, ...props}) => {
+  console.log(props.rightText);
+  console.log(props.rightNumber);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Icon name={props.iconName} type="font-awesome" />
-      <Text>{props.itemText}</Text>
-      <Text>{props.rightText}</Text>
-      <Icon name="chevron-right" type="entypo" />
+    <SafeAreaView>
+      <TouchableOpacity style={styles.container} onPress={onPress}>
+        <Icon
+          reverse
+          name={props.iconName}
+          type={props.iconGroup}
+          color={props.iconColor}
+          size={20}
+        />
+        <View style={styles.content}>
+          <Text style={styles.text}>{props.itemText}</Text>
+          <View style={styles.rightContent}>
+            <Text
+              style={
+                props.rightText === undefined
+                  ? [styles.text, styles.rightNumber]
+                  : [styles.text, styles.rightText]
+              }>
+              {props.rightText === undefined
+                ? props.rightNumber
+                : props.rightText}
+            </Text>
+            <Icon name="chevron-right" type="entypo" color="#D3D3D3" />
+          </View>
+        </View>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-});
 
 export default ListItem;

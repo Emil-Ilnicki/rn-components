@@ -1,8 +1,18 @@
 import React from 'react';
-import {View} from 'react-native';
+import {
+  StyleSheet,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  View,
+} from 'react-native';
 
-const List = () => {
-  return <View></View>;
+const List: React.FC<{}> = ({children}) => {
+  return (
+    <TouchableNativeFeedback
+      background={TouchableNativeFeedback.Ripple('#FFFFFF', true)}>
+      <View>{children}</View>
+    </TouchableNativeFeedback>
+  );
 };
 
 export default List;

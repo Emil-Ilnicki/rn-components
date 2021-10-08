@@ -1,20 +1,38 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react-native';
+import {color, number, radios, text} from '@storybook/addon-knobs';
+import {action} from '@storybook/addon-actions';
 import ListItem from './ListIem';
-import {TouchableNativeFeedbackBase, View} from 'react-native';
 
-export const darkModeItem = {
-  iconName: 'moon-o',
-  itemText: 'Dark Mode',
-  rightText: 'System',
+export const lightDarkItem = () => {
+  const iconsNames = {
+    Sun: 'sun-o',
+    Moon: 'moon-o',
+  };
+
+  const iconName = radios('Icon', iconsNames, 'moon-o');
+  const iconGroup: string = 'font-awesome';
+  const iconColor = color('Color', '#000000');
+  const itemText: string = text('Left Text', 'Dark Mode');
+  const rightText: string = text('Right Text', 'System');
+
+  return {iconName, iconGroup, iconColor, itemText, rightText};
 };
 
-export const lightModeItem = {
-  iconName: 'sun-o',
-  itemText: 'Light Mode',
-  rightText: 'System',
+export const switchAccountItem = () => {
+  const iconName: string = 'account-switch';
+  const iconGroup: string = 'material-community';
+  const iconColor = color('Color', '#000000');
+  const itemText: string = text('Left Text', 'Switch Account');
+  const rightNumber: number = number('Right Number', 2);
+
+  return {iconName, iconGroup, iconColor, itemText, rightNumber};
 };
 
 storiesOf('List Item', module)
-  .add('Dark Mode', () => <ListItem {...darkModeItem} />)
-  .add('Light Mode', () => <ListItem {...lightModeItem} />);
+  .add('Light Mode / Dark Mode Item', () => (
+    <ListItem onPress={action('Item Pressed!')} {...lightDarkItem()} />
+  ))
+  .add(' Swtich Account Item', () => (
+    <ListItem onPress={action('Item Pressed')} {...switchAccountItem()} />
+  ));
