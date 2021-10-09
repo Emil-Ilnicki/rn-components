@@ -1,29 +1,20 @@
 import {HandlerFunction} from '@storybook/addon-actions';
 import React from 'react';
-import {
-  Text,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {Text, View, SafeAreaView, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {styles} from './ListItemStyle';
 
-interface ListItemProps {
+export interface ListItemProps {
   iconName: string;
   iconGroup: string;
   iconColor: string;
-  itemText?: string;
-  rightText?: string;
-  rightNumber?: number;
-  onPress: HandlerFunction;
+  itemText: string;
+  rightText: string | undefined;
+  rightNumber: number | undefined;
+  onPress?: HandlerFunction;
 }
 
 const ListItem: React.FC<ListItemProps> = ({onPress, ...props}) => {
-  console.log(props.rightText);
-  console.log(props.rightNumber);
-
   return (
     <SafeAreaView>
       <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -40,11 +31,16 @@ const ListItem: React.FC<ListItemProps> = ({onPress, ...props}) => {
             <Text
               style={
                 props.rightText === undefined
-                  ? [styles.text, styles.rightNumber]
+                  ? [
+                      styles.text,
+                      props.rightNumber !== 0 &&
+                        props.rightNumber !== null &&
+                        styles.rightNumber,
+                    ]
                   : [styles.text, styles.rightText]
               }>
               {props.rightText === undefined
-                ? props.rightNumber
+                ? props.rightNumber !== 0 && props.rightNumber
                 : props.rightText}
             </Text>
             <Icon name="chevron-right" type="entypo" color="#D3D3D3" />

@@ -1,17 +1,27 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  View,
-} from 'react-native';
+import {View} from 'react-native';
 
-const List: React.FC<{}> = ({children}) => {
+import ListItem, {ListItemProps} from './ListIem';
+import {action} from '@storybook/addon-actions';
+
+const List: React.FC<any> = ({...props}) => {
   return (
-    <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple('#FFFFFF', true)}>
-      <View>{children}</View>
-    </TouchableNativeFeedback>
+    <View>
+      {props.listItems.map((value: ListItemProps, index: number) => {
+        return (
+          <ListItem
+            key={index}
+            iconName={value.iconName}
+            iconGroup={value.iconGroup}
+            iconColor={value.iconColor}
+            itemText={value.itemText}
+            rightText={value.rightText}
+            rightNumber={value.rightNumber}
+            onPress={action(`Pressed Item ${index} on Item List`)}
+          />
+        );
+      })}
+    </View>
   );
 };
 

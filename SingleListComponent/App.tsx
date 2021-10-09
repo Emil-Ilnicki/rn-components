@@ -1,20 +1,16 @@
 import React from 'react';
 import StorybookUI from './storybook';
-import Button from './storybook/stories/Button';
+import List from './storybook/stories/List/List';
 
-import {Text} from 'react-native';
-
-import CenterView from './storybook/stories/CenterView';
+import {View} from 'react-native';
 
 const loadStorybook: boolean = true;
 
 const App = () => {
   return (
-    <CenterView>
-      <Button onPress={() => console.log('hello')}>
-        <Text> Hello </Text>
-      </Button>
-    </CenterView>
+    <View>
+      <List />
+    </View>
   );
 };
 
